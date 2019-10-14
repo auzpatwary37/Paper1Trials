@@ -34,7 +34,7 @@ public class CalibrationRunToy {
 		
 		
 		//Measurements calibrationMeasurements=new MeasurementsReader().readMeasurements("src/main/resources/toyScenarioData/toyScenarioMeasurementsTrial1.xml");
-		Measurements calibrationMeasurements=new MeasurementsReader().readMeasurements("toyMeasurements_7thOct2019.xml");
+		Measurements calibrationMeasurements=new MeasurementsReader().readMeasurements("src/main/resources/toyScenarioData/toyMeasurements_10thOct19.xml");
 		Config initialConfig=ConfigGenerator.generateToyConfig();
 		ParamReader pReader=new ParamReader("src/main/resources/toyScenarioData/paramReaderToy.csv");
 		MeasurementsStorage storage=new MeasurementsStorage(calibrationMeasurements);

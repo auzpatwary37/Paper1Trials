@@ -45,7 +45,7 @@ public class SimObjectiveRecorder {
 	public ArrayList<LinkedHashMap<String,Double>> params=new ArrayList<>();
 	public ArrayList<Boolean> hasRun=new ArrayList<>();
 	
-	public SimObjectiveRecorder(MeasurementsStorage countdata,Config config,HashMap<String,Tuple<Double,Double>>timeBean, ParamReader pReader) {
+	public SimObjectiveRecorder(MeasurementsStorage countdata,Config config,Map<String,Tuple<Double,Double>>timeBean, ParamReader pReader) {
 		this.countData=countdata;
 		this.config=config;
 		this.timeBean=timeBean;
@@ -79,8 +79,10 @@ public class SimObjectiveRecorder {
 			
 			Config config=this.pReader.SetParamToConfig(this.config, pReader.ScaleDown(param));
 			AnalyticalModel sueAssignment=new CNLSUEModel(timeBean);
+			sueAssignment.setDefaultParameters(pReader.ScaleUp(pReader.getDefaultParam()));
 			this.hasRun.add(simCounter, true);
 			this.writePramDetails(fileLoc, simCounter);
+			
 			simRun.run(sueAssignment, config, param, true, Integer.toString(simCounter),countData);
 			this.writeSimCountData(countData, fileLoc, simCounter,param);
 			simCounter++;
@@ -250,9 +252,9 @@ public class SimObjectiveRecorder {
 		ParamReader pReader=new ParamReader("src/main/resources/toyScenarioData/paramReaderToy.csv");
 		SimRun simRun=new SimRunImplToy(150);
 		MeasurementsStorage ms=new MeasurementsStorage(calibrationMeasurements);
-		SimObjectiveRecorder simRecorder=new SimObjectiveRecorder(ms, config, getDefaultTimeBean(), pReader);
+		SimObjectiveRecorder simRecorder=new SimObjectiveRecorder(ms, config, calibrationMeasurements.getTimeBean(), pReader);
 		LinkedHashMap<String,Tuple<Double,Double>>paramLimit=pReader.ScaleUpLimit(pReader.getInitialParamLimit());
-		simRecorder.recordData(simRun,paramLimit, 15, 1, "Grid","toyScenario/GreedySearch/CountDataLog",false);
+		simRecorder.recordData(simRun,paramLimit, 15, 1, "Grid","toyScenario/GreedySearch/CountDataLog",true);
 	}
 	
 //	public static LinkedHashMap<String,Double> getInitialGuessSimplified() {
