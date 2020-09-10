@@ -398,17 +398,17 @@ public class transitGenerator {
 	private static Vehicle createTransitVehicle(VehiclesFactory vsf,String vehicleId,String type) {
 		VehicleType vt=vsf.createVehicleType(Id.create(type,VehicleType.class));
 		if(type.equals("bus")) {
-			VehicleCapacity vc=vsf.createVehicleCapacity();
+			VehicleCapacity vc=vt.getCapacity();
+					//vsf.createVehicleCapacity();
 			vc.setSeats(60);
 			vc.setStandingRoom(20);
-			vt.setCapacity(vc);
 			vt.setPcuEquivalents(3);
 
 		}else {
-			VehicleCapacity vc=vsf.createVehicleCapacity();
+			VehicleCapacity vc=vt.getCapacity();
 			vc.setSeats(50);
 			vc.setStandingRoom(120);
-			vt.setCapacity(vc);
+			
 		}
 		Vehicle v=vsf.createVehicle(Id.createVehicleId(vehicleId), vt);
 		return v;

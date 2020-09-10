@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 
 import org.apache.log4j.PropertyConfigurator;
@@ -21,6 +22,7 @@ import ust.hk.praisehk.metamodelcalibration.matamodels.MetaModel;
 import ust.hk.praisehk.metamodelcalibration.matamodels.SimAndAnalyticalGradientCalculator;
 import ust.hk.praisehk.metamodelcalibration.matsimIntegration.MeasurementsStorage;
 import ust.hk.praisehk.metamodelcalibration.matsimIntegration.SimRun;
+import ust.hk.praisehk.metamodelcalibration.measurements.MeasurementType;
 import ust.hk.praisehk.metamodelcalibration.measurements.Measurements;
 import ust.hk.praisehk.metamodelcalibration.measurements.MeasurementsReader;
 import ust.hk.praisehk.metamodelcalibration.measurements.MeasurementsWriter;
@@ -35,11 +37,16 @@ public class CalibrationRunToy {
 		
 		//Measurements calibrationMeasurements=new MeasurementsReader().readMeasurements("src/main/resources/toyScenarioData/toyScenarioMeasurementsTrial1.xml");
 		Measurements calibrationMeasurements=new MeasurementsReader().readMeasurements("src/main/resources/toyScenarioData/toyMeasurements_10thOct19.xml");
+		
+		calibrationMeasurements.removeMeasurementsByType(MeasurementType.linkVolume);
+		//calibrationMeasurements.removeMeasurementsByType(MeasurementType.smartCardEntry);
+		//calibrationMeasurements.removeMeasurementsByType(MeasurementType.smartCardEntryAndExit);
+		
 		Config initialConfig=ConfigGenerator.generateToyConfig();
 		ParamReader pReader=new ParamReader("src/main/resources/toyScenarioData/paramReaderToy.csv");
 		MeasurementsStorage storage=new MeasurementsStorage(calibrationMeasurements);
 
-		LinkedHashMap<String,Double>initialParams=loadInitialParam(pReader,new double[] {-30,1});
+		LinkedHashMap<String,Double>initialParams=loadInitialParam(pReader,new double[] {-45,1.2});
 
 		//LinkedHashMap<String,Double>initialParams=loadInitialParam(pReader,new double[] {-50,-50});
 
@@ -62,7 +69,7 @@ public class CalibrationRunToy {
 			sue.setDefaultParameters(pReader.ScaleUp(pReader.getDefaultParam()));
 			sue.setFileLoc("toyScenario/");
 			simRun.run(sue, config, params, true, Integer.toString(i), storage);
-			
+			config.global().setNumberOfThreads(7);
 //			Measurements toyMeasurement= sue.perFormSUE(initialParams,sue.getAnalyticalModelInternalParams(), null);
 //			new MeasurementsWriter(toyMeasurement).write("toyMeasurements_7thOct2019.xml");
 		

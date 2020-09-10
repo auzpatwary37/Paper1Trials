@@ -16,7 +16,6 @@
 		<!-- Default:1800.0; Defines how many seconds a time mutation can maximally shift a time. -->
 		<param name="mutationRange" value="1800.0" />
 		<!-- false; Use individual settings for each subpopulation. If enabled but no settings are found, regular settings are uses as fallback. -->
-		<param name="useIndividualSettingsForSubpopulations" value="false" />
 	</module>
 	<module name="changeMode" >
 		<!-- Defines whether car availability is considered be considered or not. An agent has no car only if it has no license, or never access to a car. Default: true -->
@@ -320,7 +319,6 @@
 		<!-- (not tested) will remove plan attributes that are presumably not used, such as activityStartTime. default=false. Use with Caution! -->
 		<param name="removingUnnecessaryPlanAttributes" value="false" />
 		<!-- Name of the (Object)Attribute defining the subpopulation to which pertains a Person (as freight, through traffic, etc.). The attribute must be of String type.  Change away from default only in desperate situations. -->
-		<param name="subpopulationAttributeName" value="subpopulation" />
 	</module>
 	<module name="planscalcroute" >
 		<!-- All the modes for which the router is supposed to generate network routes (like car) -->

@@ -2,6 +2,7 @@ package Calibration.ust.hk;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.List;
 
 import javax.inject.Singleton;
 import javax.xml.parsers.ParserConfigurationException;
@@ -14,10 +15,13 @@ import org.matsim.pt.router.TransitRouter;
 import org.matsim.pt.transitSchedule.api.TransitLine;
 import org.matsim.pt.transitSchedule.api.TransitRoute;
 import org.matsim.pt.transitSchedule.api.TransitSchedule;
+import org.matsim.pt.transitSchedule.api.TransitStopFacility;
 import org.xml.sax.SAXException;
 
+import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 import com.google.inject.Scopes;
+import com.google.inject.TypeLiteral;
 import com.google.inject.multibindings.MapBinder;
 import com.google.inject.name.Names;
 
@@ -50,6 +54,28 @@ public class DynamicRoutingModuleV2 extends AbstractModule {
 	private boolean fixedValueTransferEnabled = false;
 	private double busBusDiscount = 0.0;
 	private double busTrainDiscount = 0.0;
+	
+	
+	private boolean fareRateEnabled = false;
+	private double fareRate = 1.;
+	
+	public static final String transferDiscountJsonName = "TransferDiscountJson";
+	public static final String fixedDiscountName = "FixedDiscount";
+	public static final String busBusDiscountName = "BBI";
+	public static final String busTrainDiscountName = "TBI";
+	
+	public static final String fareRateEnabledName = "FareRateEnabled";
+	public static final String fareRateName = "FareRate";
+	
+	public static final String selectedFareRateName = "SelectedFareRate";
+	public static final String selectedStopsName = "SelectedStops";
+	public static final String selectedFareRateName2 = "SelectedFareRate2";
+	public static final String selectedStopsName2 = "SelectedStops2";
+	
+	private List<Id<TransitStopFacility>> selectedStops = null;
+	private List<Id<TransitStopFacility>> selectedStops2 = null;
+	private Double selectedFareRate = null;
+	private Double selectedFareRate2 = null;
 	
 	/**
 	 * An alternate constructor that do the bus fare loading itself.
@@ -169,6 +195,28 @@ public class DynamicRoutingModuleV2 extends AbstractModule {
 			bind(Boolean.class).annotatedWith(Names.named("FixedDiscount")).toInstance(fixedValueTransferEnabled);
 			bind(Double.class).annotatedWith(Names.named("BBI")).toInstance(busBusDiscount);
 			bind(Double.class).annotatedWith(Names.named("TBI")).toInstance(busTrainDiscount);
+			
+			
+		
+			//bind(String.class).annotatedWith(Names.named(transferDiscountJsonName)).toInstance(transferDiscountJson); //Changed name
+		
+			
+			bind(Boolean.class).annotatedWith(Names.named(fareRateEnabledName)).toInstance(fareRateEnabled);
+			bind(Double.class).annotatedWith(Names.named(fareRateName)).toInstance(fareRate);
+			
+			if(selectedFareRate==null) {
+				selectedFareRate = -1.;
+				selectedStops = Lists.newArrayList();
+			}
+			if(selectedFareRate2==null) {
+				selectedFareRate2 = -1.;
+				selectedStops2 = Lists.newArrayList();
+			}
+			bind(new TypeLiteral<List<Id<TransitStopFacility>>>(){}).annotatedWith(Names.named(selectedStopsName)).toInstance(selectedStops);
+			bind(Double.class).annotatedWith(Names.named(selectedFareRateName)).toInstance(selectedFareRate);
+			
+			bind(new TypeLiteral<List<Id<TransitStopFacility>>>(){}).annotatedWith(Names.named(selectedStopsName2)).toInstance(selectedStops2);
+			bind(Double.class).annotatedWith(Names.named(selectedFareRateName2)).toInstance(selectedFareRate2);
 		}
 
 	}
