@@ -35,10 +35,10 @@ public class CalibrationRunToy {
 		final boolean internalCalibration=false;
 		
 		
-		//Measurements calibrationMeasurements=new MeasurementsReader().readMeasurements("src/main/resources/toyScenarioData/toyScenarioMeasurementsTrial1.xml");
-		Measurements calibrationMeasurements=new MeasurementsReader().readMeasurements("src/main/resources/toyScenarioData/toyMeasurements_10thOct19.xml");
+		//Measurements calibrationMeasurements=new MeasurementsReader().readMeasurements("src/main/resources/toyScenarioData/toyMeasurements_10thOct19.xml");
+		Measurements calibrationMeasurements=new MeasurementsReader().readMeasurements("src/main/resources/toyScenarioData/toyScenarioMeasurementVersion12_1.xml");
 		
-		calibrationMeasurements.removeMeasurementsByType(MeasurementType.linkVolume);
+		//calibrationMeasurements.removeMeasurementsByType(MeasurementType.linkVolume);
 		//calibrationMeasurements.removeMeasurementsByType(MeasurementType.smartCardEntry);
 		//calibrationMeasurements.removeMeasurementsByType(MeasurementType.smartCardEntryAndExit);
 		
@@ -46,7 +46,7 @@ public class CalibrationRunToy {
 		ParamReader pReader=new ParamReader("src/main/resources/toyScenarioData/paramReaderToy.csv");
 		MeasurementsStorage storage=new MeasurementsStorage(calibrationMeasurements);
 
-		LinkedHashMap<String,Double>initialParams=loadInitialParam(pReader,new double[] {-45,1.2});
+		LinkedHashMap<String,Double>initialParams=loadInitialParam(pReader,new double[] {-40,0.8});
 
 		//LinkedHashMap<String,Double>initialParams=loadInitialParam(pReader,new double[] {-50,-50});
 
@@ -61,7 +61,7 @@ public class CalibrationRunToy {
 		SimRun simRun=new SimRunImplToy(150);
 		
 		writeRunParam(calibrator, "toyScenario/Calibration/", params, pReader);
-		AnalyticalModel sue=new CNLSUEModel(calibrationMeasurements.getTimeBean());
+ 		AnalyticalModel sue=new CNLSUEModel(calibrationMeasurements.getTimeBean());
 		
 		for(int i=0;i<50;i++) {
 			Config config=pReader.SetParamToConfig(initialConfig, params);

@@ -16,44 +16,16 @@
 
 	<build>
 		
- 		<plugins> 
-<!-- 			<plugin> -->
-<!-- 				<artifactId>maven-compiler-plugin</artifactId> -->
-<!-- 				<version>3.5.1</version> -->
-<!-- 				<configuration> -->
-<!-- 					<source>1.8</source> -->
-<!-- 					<target>1.8</target> -->
-<!-- 				</configuration> -->
-<!-- 			</plugin> -->
-<!-- 			<plugin> -->
-<!-- 			<artifactId>maven-compiler-plugin</artifactId> -->
-<!--         	<version>3.5.1</version> -->
-<!--         	<configuration> -->
-<!--         	<source>1.8</source> -->
-<!--         	<target>1.8</target> -->
-<!--         	</configuration> -->
-<!-- 			</plugin> -->
-<!-- 		<plugin> -->
-<!--     <groupId>org.apache.maven.plugins</groupId> -->
-<!--     <artifactId>maven-compiler-plugin</artifactId> -->
-<!--     <version>3.8.0</version> -->
-<!--     <configuration> -->
-<!--         <release>13</release>  -->
-<!--     </configuration> -->
-<!-- </plugin> -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>attach-sources</id>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
+<plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.5.1</version>
+        <configuration>
+          <source>11</source>
+          <target>11</target>
+        </configuration>
+      </plugin>
+    </plugins>
 	</build>
 	
 	<repositories>
@@ -83,11 +55,11 @@
 
 
 	<dependencies>
-			<dependency>
-		    <groupId>edu.ucar</groupId>
-		    <artifactId>cdm</artifactId>
-		    <version>4.5.5</version>
-		</dependency>
+<!-- 			<dependency> -->
+<!-- 		    <groupId>edu.ucar</groupId> -->
+<!-- 		    <artifactId>cdm</artifactId> -->
+<!-- 		    <version>4.5.5</version> -->
+<!-- 		</dependency> -->
 		<dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -201,7 +173,13 @@
 			<artifactId>guice</artifactId>
 			<version>4.2.0</version>
 		</dependency>
-
+		<dependency>
+			<groupId>cz.cvut.fit.jcool</groupId>
+			<artifactId>jcool-core</artifactId>
+			<version>1.2-SNAPSHOT</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/resources/jcool-core.jar</systemPath>
+		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/de.xypron.jcobyla/jcobyla -->
 		<dependency>
@@ -217,27 +195,14 @@
 			<version>1.1.0</version>
 		</dependency>
 
-
+		
 	
 
 		
 	
 
-		<dependency>
-			<groupId>null</groupId>
-			<artifactId>null</artifactId>
-			<version>null</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/src/main/resources/ea.jar</systemPath>
-		</dependency>
-
-		<dependency>
-			<groupId>cz.cvut.fit.jcool</groupId>
-			<artifactId>jcool-core</artifactId>
-			<version>1.2-SNAPSHOT</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/src/main/resources/jcool-core.jar</systemPath>
-		</dependency>
+	
+		
 		<!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
 		<dependency>
 		    <groupId>org.apache.poi</groupId>
