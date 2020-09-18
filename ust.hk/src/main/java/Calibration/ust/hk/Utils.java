@@ -82,7 +82,7 @@ public class Utils {
 			Config initialConfig=ConfigGenerator.generateToyConfig();
 			ParamReader pReader=new ParamReader("src/main/resources/toyScenarioData/paramReaderToy.csv");
 			MeasurementsStorage storage=new MeasurementsStorage(real);
-			FileWriter fw = new FileWriter(new File(outputFileLoc+"/multiObj.csv"));
+			FileWriter fw = new FileWriter(new File(outputFileLoc+"/multiObj.csv"),false);
 			fw.append("key");
 			List<MeasurementType> keys = new ArrayList<>();
 			for(MeasurementType ss : real.getMeasurementsByType().keySet()) {

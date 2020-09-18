@@ -20,6 +20,7 @@ import ust.hk.praisehk.metamodelcalibration.analyticalModelImpl.CNLSUEModelSubPo
 import ust.hk.praisehk.metamodelcalibration.analyticalModelImpl.SUEModelContTime;
 import ust.hk.praisehk.metamodelcalibration.calibrator.Calibrator;
 import ust.hk.praisehk.metamodelcalibration.calibrator.CalibratorImpl;
+import ust.hk.praisehk.metamodelcalibration.calibrator.ListMeasurementTypeObjectiveCalibratorImp;
 import ust.hk.praisehk.metamodelcalibration.calibrator.MultiObjectiveCalibratorImpl;
 import ust.hk.praisehk.metamodelcalibration.calibrator.ObjectiveCalculator;
 import ust.hk.praisehk.metamodelcalibration.calibrator.ParamReader;
@@ -46,21 +47,26 @@ public class CalibrationRunToy {
 		//calibrationMeasurements.removeMeasurementsByType(MeasurementType.linkVolume);
 		//calibrationMeasurements.removeMeasurementsByType(MeasurementType.smartCardEntry);
 		//calibrationMeasurements.removeMeasurementsByType(MeasurementType.smartCardEntryAndExit);
+		List<MeasurementType> types = new ArrayList<>();
+		types.add(MeasurementType.linkVolume);
+		//types.add(MeasurementType.smartCardEntry);
+		//types.add(MeasurementType.smartCardEntryAndExit);
+		
 		
 		Config initialConfig=ConfigGenerator.generateToyConfig();
 		ParamReader pReader=new ParamReader("src/main/resources/toyScenarioData/paramReaderToy.csv");
 		MeasurementsStorage storage=new MeasurementsStorage(calibrationMeasurements);
 
-		LinkedHashMap<String,Double>initialParams=loadInitialParam(pReader,new double[] {-45,1.2});
+		LinkedHashMap<String,Double>initialParams=loadInitialParam(pReader,new double[] {-50,0.6});
 
 		//LinkedHashMap<String,Double>initialParams=loadInitialParam(pReader,new double[] {-50,-50});
 
 		LinkedHashMap<String,Double>params=initialParams;
 		pReader.setInitialParam(initialParams);
 		
-		Calibrator calibrator=new MultiObjectiveCalibratorImpl(calibrationMeasurements,"toyScenario/Calibration/", pReader,10, 4);
+		//Calibrator calibrator=new MultiObjectiveCalibratorImpl(calibrationMeasurements,"toyScenario/Calibration/", pReader,10, 4);
 		//Calibrator calibrator=new CalibratorImpl(calibrationMeasurements,"toyScenario/Calibration/",internalCalibration, pReader,10, 4);
-		
+		Calibrator calibrator = new ListMeasurementTypeObjectiveCalibratorImp(calibrationMeasurements,"toyScenario/Calibration/", internalCalibration, pReader,10, 4,types);
 		calibrator.setMaxTrRadius(25.0);
 	
 		
