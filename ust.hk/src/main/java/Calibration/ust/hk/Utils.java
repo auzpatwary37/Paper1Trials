@@ -12,6 +12,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.matsim.core.config.Config;
 import org.matsim.core.utils.collections.Tuple;
@@ -51,6 +52,43 @@ public class Utils {
 			String s = "";
 			fw.append(i+",");
 			for(MeasurementType t:types) {
+				fw.append(s+obj.get(t));
+				s = ",";
+			}
+			fw.append("\n");
+		}
+		fw.flush();
+		fw.close();
+	
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	}
+	
+	public static void calcClusturedMultiObjectiveFromResult(String realMeasurementsLoc, String resultFolderLoc, String outFileLoc, Map<String,Set<MeasurementType>> cluster) {
+		Measurements realMeasurements = new MeasurementsReader().readMeasurements(realMeasurementsLoc);
+		try {
+			FileWriter fw = new FileWriter(new File(outFileLoc+"/multiObj.csv"));
+			List<String> types = new ArrayList<>();
+		for(int i=0;i<50;i++) {
+			if(!new File(resultFolderLoc+"/simMeasurement"+i+".xml").exists())return;
+			Measurements m = new MeasurementsReader().readMeasurements(resultFolderLoc+"/simMeasurement"+i+".xml");
+			Map<String,Double> obj = ObjectiveCalculator.calcMultiObjective(realMeasurements, m, ObjectiveCalculator.TypeMeasurementAndTimeSpecific,cluster);
+			
+			if(i==0) {
+				fw.append("Interation,");
+				String s = "";
+				for(String t:obj.keySet()) {
+					fw.append(s+t.toString());
+					s = ",";
+					types.add(t);
+				}
+				fw.append("\n");
+			}
+			String s = "";
+			fw.append(i+",");
+			for(String t:types) {
 				fw.append(s+obj.get(t));
 				s = ",";
 			}
@@ -125,27 +163,27 @@ public class Utils {
 	}
 	
 	public static void main(String[] args) {
-//		String realMeasurement = "src/main/resources/toyScenarioData/toyScenarioMeasurementVersion12_1.xml";
-//		String parentResultFileLoc = "toyScenario/multiObj";
-//		List<String> folderLoc = new ArrayList<>();
-//		File directory = new File(parentResultFileLoc);
-//
-//	    // Get all files from a directory.
-//	    File[] fList = directory.listFiles();
-//	    if(fList != null) {
-//	        for (File file : fList) {      
-//	            if (file.isDirectory()) {
-//	                folderLoc.add(file.getPath());
-//	            }
-//	        }
-//	    }
-//		for(String s:folderLoc) {
-//			calcMultiObjectiveFromResult(realMeasurement,s,s);
-//		}
+		String realMeasurement = "src/main/resources/toyScenarioData/toyScenarioMeasurementVersion12_1.xml";
+		String parentResultFileLoc = "toyScenario/multiObj";
+		List<String> folderLoc = new ArrayList<>();
+		File directory = new File(parentResultFileLoc);
+
+	    // Get all files from a directory.
+	    File[] fList = directory.listFiles();
+	    if(fList != null) {
+	        for (File file : fList) {      
+	            if (file.isDirectory()) {
+	                folderLoc.add(file.getPath());
+	            }
+	        }
+	    }
+		for(String s:folderLoc) {
+			calcMultiObjectiveFromResult(realMeasurement,s,s);
+		}
 		
-		String csvFileLoc = "toyScenario/multiObj/seperateObj.csv";
-		String outputFileLoc  = "toyScenario/multiObj";
-		calcSeperatelyCalculatedMultiObjective(csvFileLoc,outputFileLoc);
+//		String csvFileLoc = "toyScenario/multiObj/seperateObj.csv";
+//		String outputFileLoc  = "toyScenario/multiObj";
+//		calcSeperatelyCalculatedMultiObjective(csvFileLoc,outputFileLoc);
 		
 	}
 }
