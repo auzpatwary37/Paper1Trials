@@ -25,13 +25,13 @@ public class SimRunImplToy implements SimRun{
 	}
 	
 	@Override
-	public void run(AnalyticalModel sue, Config config, LinkedHashMap<String, Double> params, boolean generateOd,
+	public Measurements run(AnalyticalModel sue, Config config, LinkedHashMap<String, Double> params, boolean generateOd,
 			String threadNo, MeasurementsStorage storage) {
 		
 		config.controler().setLastIteration(this.lastIteration);
 		config.controler().setOutputDirectory("toyScenario/output"+threadNo);
 		config.transit().setUseTransit(true);
-		config.plansCalcRoute().setInsertingAccessEgressWalk(false);
+		//config.plansCalcRoute().setInsertingAccessEgressWalk(false);
 		config.qsim().setUsePersonIdForMissingVehicleId(true);
 		config.global().setCoordinateSystem("arbitrary");
 		config.parallelEventHandling().setNumberOfThreads(3);
@@ -57,6 +57,7 @@ public class SimRunImplToy implements SimRun{
 		controler.addOverridingModule(anaModule);
 		controler.getConfig().controler().setOverwriteFileSetting(OutputDirectoryHierarchy.OverwriteFileSetting.overwriteExistingFiles);
 		controler.run();
+		return this.outputMeasurements;
 	}
 
 	@Override

@@ -21,19 +21,18 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.5.1</version>
         <configuration>
-          <source>11</source>
-          <target>11</target>
+          <source>13</source>
+          <target>13</target>
         </configuration>
       </plugin>
     </plugins>
 	</build>
 	
 	<repositories>
-  <repository>
-    <id>matsim</id>
-    <name>MATSim release repository</name>
-    <url>http://dl.bintray.com/matsim/matsim</url>
-  </repository>
+<repository>
+			<id>matsim</id>
+			<url>https://repo.matsim.org/repository/matsim</url>
+		</repository>
   
 <repository>
       <id>osgeo</id>
@@ -70,14 +69,14 @@
          <dependency>
     <groupId>org.matsim</groupId>
     <artifactId>matsim</artifactId>
-    <version>12.0-SNAPSHOT</version>
+    <version>14.0</version>
   </dependency>
   
 
 <dependency>
 		    <groupId>org.matsim.contrib</groupId>
 		    <artifactId>roadpricing</artifactId>
-		    <version>12.0-SNAPSHOT</version>
+		    <version>14.0</version>
 		    <exclusions>
 		    	<exclusion>
 		    		<groupId>org.matsim</groupId>
@@ -88,7 +87,7 @@
 		<dependency>
 			<groupId>org.matsim.contrib</groupId>
 			<artifactId>signals</artifactId>
- 			<version>12.0-SNAPSHOT</version>
+ 			<version>14.0</version>
  			<exclusions>
  				<exclusion>
  					<groupId>org.matsim</groupId>
@@ -99,7 +98,7 @@
 		<dependency>
 			<groupId>org.matsim.contrib</groupId>
 			<artifactId>emissions</artifactId>
-			<version>12.0-SNAPSHOT</version>
+			<version>14.0</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.matsim</groupId>
@@ -173,13 +172,7 @@
 			<artifactId>guice</artifactId>
 			<version>4.2.0</version>
 		</dependency>
-		<dependency>
-			<groupId>cz.cvut.fit.jcool</groupId>
-			<artifactId>jcool-core</artifactId>
-			<version>1.2-SNAPSHOT</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/src/main/resources/jcool-core.jar</systemPath>
-		</dependency>
+	
 
 		<!-- https://mvnrepository.com/artifact/de.xypron.jcobyla/jcobyla -->
 		<dependency>

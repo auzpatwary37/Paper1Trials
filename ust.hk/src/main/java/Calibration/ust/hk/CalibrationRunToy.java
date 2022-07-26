@@ -4,28 +4,18 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.log4j.PropertyConfigurator;
 import org.matsim.core.config.Config;
-
 
 import ust.hk.praisehk.metamodelcalibration.analyticalModel.AnalyticalModel;
 import ust.hk.praisehk.metamodelcalibration.analyticalModelImpl.CNLSUEModel;
-import ust.hk.praisehk.metamodelcalibration.analyticalModelImpl.CNLSUEModelSubPop;
-import ust.hk.praisehk.metamodelcalibration.analyticalModelImpl.SUEModelContTime;
 import ust.hk.praisehk.metamodelcalibration.calibrator.Calibrator;
-import ust.hk.praisehk.metamodelcalibration.calibrator.CalibratorImpl;
-import ust.hk.praisehk.metamodelcalibration.calibrator.ListMeasurementTypeObjectiveCalibratorImp;
-import ust.hk.praisehk.metamodelcalibration.calibrator.MultiObjectiveCalibratorImpl;
 import ust.hk.praisehk.metamodelcalibration.calibrator.MultiObjectiveClusteredCalibratorImpl;
-import ust.hk.praisehk.metamodelcalibration.calibrator.ObjectiveCalculator;
 import ust.hk.praisehk.metamodelcalibration.calibrator.ParamReader;
 import ust.hk.praisehk.metamodelcalibration.matamodels.MetaModel;
 import ust.hk.praisehk.metamodelcalibration.matamodels.SimAndAnalyticalGradientCalculator;
@@ -34,7 +24,6 @@ import ust.hk.praisehk.metamodelcalibration.matsimIntegration.SimRun;
 import ust.hk.praisehk.metamodelcalibration.measurements.MeasurementType;
 import ust.hk.praisehk.metamodelcalibration.measurements.Measurements;
 import ust.hk.praisehk.metamodelcalibration.measurements.MeasurementsReader;
-import ust.hk.praisehk.metamodelcalibration.measurements.MeasurementsWriter;
 
 public class CalibrationRunToy {
 

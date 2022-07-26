@@ -1,5 +1,6 @@
 package Calibration.ust.hk;
 
+
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
@@ -19,7 +20,6 @@ import org.matsim.pt.transitSchedule.api.TransitStopFacility;
 import org.xml.sax.SAXException;
 
 import com.google.common.collect.Lists;
-import com.google.inject.Inject;
 import com.google.inject.Scopes;
 import com.google.inject.TypeLiteral;
 import com.google.inject.multibindings.MapBinder;
@@ -36,10 +36,7 @@ import dynamicTransitRouter.fareCalculators.LRFareCalculator;
 import dynamicTransitRouter.fareCalculators.MTRFareCalculator;
 import dynamicTransitRouter.fareCalculators.UniformFareCalculator;
 import dynamicTransitRouter.fareCalculators.ZonalFareXMLParserV2;
-import dynamicTransitRouter.transfer.AllPTTransferDiscount;
 import dynamicTransitRouter.transfer.TransferDiscountCalculator;
-import transitCalculatorsWithFare.TransitFareControlerListener;
-import transitCalculatorsWithFare.TransitFareHandler;
 
 public class DynamicRoutingModuleV2 extends AbstractModule {
 
@@ -175,11 +172,11 @@ public class DynamicRoutingModuleV2 extends AbstractModule {
 			mapbinder.addBinding("LR").to(LRFareCalculator.class).in(Scopes.SINGLETON);
 			bind(String.class).annotatedWith(Names.named("LRFareInput")).toInstance(LRFareFilePath);
 
-			addEventHandlerBinding().to(TransitFareHandler.class).in(Singleton.class); // Add the transit fare handler
+			addEventHandlerBinding().to(transitFareAndHandler.TransitFareHandler.class).in(Singleton.class); // Add the transit fare handler
 			addEventHandlerBinding().to(PTRecordHandler.class).in(Singleton.class); // Only one PTRecordHandler exists
 
-			addControlerListenerBinding().to(TransitFareControlerListener.class);
-			bind(TransitFareHandler.class).in(Singleton.class);
+			addControlerListenerBinding().to(transitFareAndHandler.TransitFareControlerListener.class);
+			bind(transitFareAndHandler.TransitFareHandler.class).in(Singleton.class);
 			
 			// Bind the fare to new dynamic and fare calculator
 			bind(TransitRouter.class).to(TransitRouterFareDynamicImpl.class);
